@@ -1,66 +1,99 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application/screens/profile_screen.dart';
 import 'package:flutter_application/styles/theme.dart' as Style;
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  HomeScreen({Key? key}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _currentIndex = 0;
-
-  List<Widget> _widgetOptions = <Widget>[
-    Text("Home"),
-    Text("Search"),
-    Text("Camera"),
-    ProfileScreen(),
-  ];
-
-  void _onItemTap(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
+  final double coverHeight = 195.2;
+  @override
+  Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    return Scaffold(
+      body: Stack(
+        children: <Widget>[
+          Container(
+            height: size.height * 45,
+            decoration: const BoxDecoration(
+                color: Style.Colors.secondColor,
+                image: DecorationImage(
+                    alignment: Alignment.topCenter,
+                    image: AssetImage("assets/831762.jpg"))),
+          ),
+          SafeArea(
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                    child: GridView.count(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 20,
+                  mainAxisSpacing: 20,
+                  children: <Widget>[
+                    CategoryCard(
+                      coverHeight: coverHeight,
+                      imgSrc: "assets/img1.jpg",
+                    ),
+                    CategoryCard(
+                      coverHeight: coverHeight,
+                      imgSrc: "assets/img2.jpg",
+                    ),
+                    CategoryCard(
+                      coverHeight: coverHeight,
+                      imgSrc: "assets/img3.jpg",
+                    ),
+                    CategoryCard(
+                      coverHeight: coverHeight,
+                      imgSrc: "assets/img4.jpg",
+                    ),
+                    CategoryCard(
+                      coverHeight: coverHeight,
+                      imgSrc: "assets/img5.jpg",
+                    ),
+                    CategoryCard(
+                      coverHeight: coverHeight,
+                      imgSrc: "assets/img6.jpg",
+                    )
+                  ],
+                ))
+              ],
+            ),
+          )
+        ],
+      ),
+    );
   }
+}
+
+class CategoryCard extends StatelessWidget {
+  final String imgSrc;
+  const CategoryCard({
+    Key? key,
+    required this.coverHeight,
+    required this.imgSrc,
+  }) : super(key: key);
+
+  final double coverHeight;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          backgroundColor: Style.Colors.mainColor,
-          title: const Center(
-            child: Text(
-              'リーグ・オブ・レジェンズ',
-              textAlign: TextAlign.center,
-            ),
-          )),
-      body: Center(
-        child: _widgetOptions.elementAt(_currentIndex),
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(13),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text('Home'),
-            backgroundColor: Style.Colors.mainColor,
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              title: Text('Search'),
-              backgroundColor: Style.Colors.mainColor),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.face),
-              title: Text('Champions'),
-              backgroundColor: Style.Colors.mainColor),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              title: Text('Person'),
-              backgroundColor: Style.Colors.mainColor)
+      child: Column(
+        children: <Widget>[
+          Image.asset(
+            imgSrc,
+            width: double.infinity,
+            height: coverHeight,
+            fit: BoxFit.cover,
+          )
         ],
-        onTap: _onItemTap,
       ),
     );
   }
